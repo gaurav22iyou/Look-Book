@@ -3,6 +3,7 @@ backend/target/
 backend/.classpath
 backend/.project
 backend/.settings/
+backend/src/main/resources/db/
 
 # Frontend
 frontend/node_modules/

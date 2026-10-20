@@ -1,5 +1,17 @@
 package com.example.bookingsystem.service;
 
+import java.time.LocalDateTime;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import com.example.bookingsystem.dto.request.CreateBookingRequest;
 import com.example.bookingsystem.entity.BookingStatus;
 import com.example.bookingsystem.entity.Slot;
@@ -8,18 +20,6 @@ import com.example.bookingsystem.entity.User;
 import com.example.bookingsystem.repository.BookingRepository;
 import com.example.bookingsystem.repository.SlotRepository;
 import com.example.bookingsystem.repository.UserRepository;
-import com.example.bookingsystem.security.CustomUserDetails;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.time.LocalDateTime;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class BookingConcurrencyTest {
@@ -35,6 +35,13 @@ class BookingConcurrencyTest {
 
     @Autowired
     private BookingRepository bookingRepository;
+
+    @BeforeEach
+    void setup() {
+        bookingRepository.deleteAll();
+        slotRepository.deleteAll();
+        userRepository.deleteAll();
+    }
 
     @Test
     void testConcurrentBookings_ExactlyOneSucceeds() throws InterruptedException {

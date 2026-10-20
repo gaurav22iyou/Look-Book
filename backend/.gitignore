@@ -4,6 +4,14 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# Environment files and credentials
+.env
+.env.*
+!.env.example
+
+# Database migrations (schema managed by Hibernate ddl-auto=update)
+src/main/resources/db/
+
 ### STS ###
 .apt_generated
 .classpath
